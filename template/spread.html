@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin: 0; padding: 0}
+
+        body {
+            width: 800px;
+        }
+
+        .choosing-body {
+            width: 750px;
+            display: flex;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .choosing-description {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        .choosing-grid {
+            width: 150px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .choosing-card-img {
+            height: 200px;
+        }
+
+        .spread-body {
+            display: flex;
+            margin-right: 10px;
+        }
+
+        .spread-grid {
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .spread-card-img {
+            height: 400px;
+        }
+
+        .spread-col {
+            width: 250px;
+            margin-left: 10px;
+        }
+
+        .spread-grid-title {
+            display: flex;
+        }
+
+        .spread-grid-match {
+            left: 0px;
+            margin-left: 10px;
+            font-size: x-large;
+        }
+
+        .spread-grid-name {
+            width: 100%;
+            text-align: center;
+            font-size: x-large;
+        }
+        
+        .spread-grid-misaligned {
+            right: 0px;
+            margin-right: 10px;
+            font-size: x-large;
+        }
+
+        .spread-place {
+            border: 2px;
+            border-style: double;
+            margin-top: 10px;
+        }
+
+        .match-description {
+            display: flex;
+        }
+
+        .description-body {
+            margin-left: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-right: 60px;
+        }
+
+        .description-text {
+            margin-left: 5px;
+        }
+
+        .description-title {
+            border-right: 1px solid;
+        }
+        
+        .time-note {
+            display: flex;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        
+        .time-pass {
+            left: 0px;
+            white-space: nowrap;
+            font-size: xx-large;
+            vertical-align: top;
+        }
+
+        .time-furture {
+            right: 0px;
+            white-space: nowrap;
+            margin-right: 50px;
+            vertical-align: top;
+            font-size: xx-large;
+        }
+
+        .time-arrow {
+            width: 100%;
+            text-align: center;
+            font-size: xx-large;
+            vertical-align: top;
+        }
+
+        .vertical-note {
+            display: grid;
+            margin-left: 5px;
+        }
+
+        .vertical-positive {
+            top: 0px;
+            margin-top: 10px;
+            text-align: left;
+            white-space: nowrap;
+            font-size: xx-large;
+            align-self: start;
+        }
+
+        .vertical-neutral {
+            text-align: left;
+            vertical-align: middle;
+            font-size: xx-large;
+            align-self: center;
+        }
+
+        .vertical-negative {
+            bottom: 0px;
+            margin-bottom: 10px;
+            text-align: left;
+            white-space: nowrap;
+            font-size: xx-large;
+            align-self: end;
+        }
+    </style>
+</head>
+<body>
+    <div class="choosing-body">
+        <div>
+            <div class="choosing-grid"><img class="choosing-card-img" src="{{chosen_img}}" alt="Chosen"/></div>
+        </div>
+        <div class="choosing-description">
+            <div style="font-size: x-large;">受选牌：{{chosen['name']}}（{{chosen['name-en']}}）</div>
+            <div style="color:sienna;margin-top: 5px;">[{{chosen['deck']}}] [{{chosen['alignment']}}] [{{chosen['attribute']}}]</div>
+            <div style="margin-top: 5px;">{{chosen['meaning']}}</div>
+        </div>
+    </div>
+    <div class="spread-body">
+        {% for i in range(3) %}
+        <div class="spread-col">
+            {% for j in range(3*i, 3*i+3) %}
+            <div class="spread-place">
+                <div class="spread-grid-title">
+                    <div class="spread-grid-match">
+                        {% if matches[j]['align'] == 1 %}
+                        <p style="color: blue;">T</p>
+                        {% elif matches[j]['align'] == 2 %}
+                        <p style="color: red;">O</p>
+                        {% elif matches[j]['align'] == 3 %}
+                        <p style="color: green;">P</p>
+                        {% else %}
+                        <p>&nbsp;</p>
+                        {% endif %}
+                    </div>
+                    <div class="spread-grid-name">
+                        {% if matches[j]['chosen'] == 1%}
+                        <p style="color: purple;">
+                        {% else %}
+                        <p>
+                        {% endif %}
+                        {{spread[j]['name']}}
+                        </p>
+                    </div>
+                    <div class="spread-grid-misaligned">
+                        {% if matches[j]['misaligned'] == 1 %}
+                        <p>⟳</p>
+                        {% else %}
+                        <p>&nbsp;</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="spread-grid"><img class="spread-card-img" src="{{images[j]}}" alt="LG"/></div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        <div class="vertical-note">
+            <div class="vertical-positive">积极&nbsp;</div>
+            <div class="vertical-neutral">中立&nbsp;</div>
+            <div class="vertical-negative">消极&nbsp;</div>
+        </div>
+    </div>
+    <div class="time-note">
+        <div class="time-pass">过去</div>
+        <div class="time-arrow">⇁</div>
+        <div class="time-furture">未来</div>
+    </div>
+    <div class="description-body">
+        <table style="border-collapse: separate; border-spacing: 5px 10px;">
+            <tr valign="top">
+                <td style="text-align: right; white-space: nowrap; border-right: 1px solid; border-bottom: 1px solid;">完全匹配&nbsp;<font style="color: blue">T</font>&nbsp;</td>
+                <td style="border-bottom: 1px solid;">
+                    {% for i in range(9) %}
+                    {% if matches[i]['align'] == 1 %}
+                    <font style="font-weight: bold;">{{spread[i]['name']}}（{{spread[i]['name-en']}}）：</font>{{spread[i]['meaning']}}<br/>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr valign="top">
+                <td style="text-align: right; white-space: nowrap; border-right: 1px solid; border-bottom: 1px solid;">对立匹配&nbsp;<font style="color: red">O</font>&nbsp;</td>
+                <td style="border-bottom: 1px solid;">
+                    {% for i in range(9) %}
+                    {% if matches[i]['align'] == 2 %}
+                    <font style="font-weight: bold;">{{spread[i]['name']}}（{{spread[i]['name-en']}}）：</font>{{spread[i]['meaning']}}<br/>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr valign="top">
+                <td style="text-align: right; white-space: nowrap; border-right: 1px solid; border-bottom: 1px solid;">部分匹配&nbsp;<font style="color: green">P</font>&nbsp;</td>
+                <td style="border-bottom: 1px solid;">
+                    {% for i in range(9) %}
+                    {% if matches[i]['align'] == 3 %}
+                    <font style="font-weight: bold;">{{spread[i]['name']}}（{{spread[i]['name-en']}}）：</font>{{spread[i]['meaning']}}<br/>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr valign="top">
+                <td style="text-align: right; white-space: nowrap; border-right: 1px solid;">不匹配&nbsp;</td>
+                <td>
+                    {% for i in range(9) %}
+                    {% if matches[i]['align'] == 0 %}
+                    <font style="font-weight: bold;">{{spread[i]['name']}}（{{spread[i]['name-en']}}）：</font>{{spread[i]['meaning']}}<br/>
+                    {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

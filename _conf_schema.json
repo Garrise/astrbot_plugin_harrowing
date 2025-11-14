@@ -1,0 +1,33 @@
+{
+  "chain_reply_divine": {
+    "type": "bool",
+    "default": true,
+    "description": "是否对牌阵占卜启用群聊合并转发模式"
+  },
+  "chain_reply_draw": {
+    "type": "bool",
+    "default": true,
+    "description": "是否对单张牌启用群聊合并转发模式"
+  },
+  "ai_divine": {
+    "type": "bool",
+    "default": true,
+    "description": "是否对牌阵占卜启用AI解析"
+  },
+  "ai_draw": {
+    "type": "bool",
+    "default": true,
+    "description": "是否对单张牌启用AI解析"
+  },
+  "resources_path": {
+    "type": "string",
+    "default": "./resources",
+    "hint": "目录中不包含任何资源，请自行根据README添加。",
+    "description": "哈罗牌图片资源目录路径，相对于插件根目录"
+  },
+  "include_ai_in_chain": {
+    "type": "bool",
+    "default": true,
+    "description": "是否将 AI 解析信息加入群聊转发，若为 false 则单独发送"
+  }
+}
